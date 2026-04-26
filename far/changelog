@@ -1,4 +1,11 @@
 --------------------------------------------------------------------------------
+MZK 2026-05-10 12:27:04-04:00 - build 6683
+
+1. gh-1000: Do not materialize text coordinates in Find All menu items.
+   Instead of extracting line and position of the found pattern
+   from the item's text, macros should use Menu.GetItemExtendedData.
+
+--------------------------------------------------------------------------------
 drkns 2026-05-09 12:59:44+01:00 - build 6682
 
 1. Bump VS version to 2022, remove 2019 workarounds.
