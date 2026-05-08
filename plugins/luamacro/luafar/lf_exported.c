@@ -917,9 +917,11 @@ static void push_guid(lua_State *L, const void *pGuid)
 HANDLE LF_Open(lua_State* L, const struct OpenInfo *Info)
 {
 	FP_PROTECT();
+	int entry_top = lua_gettop(L);
+	HANDLE Result = NULL;
 
 	if (!CheckReloadDefaultScript(L) || !GetExportFunction(L, "Open"))
-		return NULL;
+		return Result;
 
 	if (Info->OpenFrom == OPEN_LUAMACRO)
 		return Open_Luamacro(L, Info);
@@ -986,17 +988,13 @@ HANDLE LF_Open(lua_State* L, const struct OpenInfo *Info)
 						struct FarMacroCall* fmc = CreateFarMacroCall(1);
 						fmc->Values[0].Type = FMVT_PANEL;
 						fmc->Values[0].Value.Pointer = RegisterObject(L); // nret
-						lua_pop(L,nret); // +0
-						return fmc;
+						Result = fmc;
 					}
-					lua_pop(L,nret+1); // +0
-					return NULL;
+					goto Exit;
 				}
 				lua_pop(L,1); // nret
 			}
-			HANDLE hndl = FillFarMacroCall(L,nret);
-			lua_pop(L,nret);
-			return hndl;
+			Result = FillFarMacroCall(L,nret);
 		}
 	}
 	else
@@ -1004,18 +1002,15 @@ HANDLE LF_Open(lua_State* L, const struct OpenInfo *Info)
 		if (pcall_msg(L, 3, 1) == 0)
 		{
 			if (lua_type(L,-1) == LUA_TNUMBER && lua_tonumber(L,-1) == -1)
-			{
-				lua_pop(L,1);
-				return PANEL_STOP;
-			}
-			else if (lua_toboolean(L, -1))             //+1: Obj
-				return RegisterObject(L);               //+0
-
-			lua_pop(L,1);
+				Result = PANEL_STOP;
+			else if (lua_toboolean(L, -1))
+				Result = RegisterObject(L);
 		}
 	}
 
-	return NULL;
+Exit:
+	lua_settop(L, entry_top);
+	return Result;
 }
 
 void LF_ClosePanel(lua_State* L, const struct ClosePanelInfo *Info)
