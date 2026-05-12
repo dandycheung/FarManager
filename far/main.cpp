@@ -862,6 +862,9 @@ static void parse_command_line(std::span<const wchar_t* const> const Args, std::
 
 static void register_restart(bool const HasArgs)
 {
+	if (!imports.RegisterApplicationRestart)
+		return;
+
 	const auto Args = HasArgs? []
 	{
 		const auto CommandLine = GetCommandLine();

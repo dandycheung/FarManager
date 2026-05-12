@@ -257,10 +257,19 @@ extern "C" BOOL WINAPI WRAPPER(GetLogicalProcessorInformation)(PSYSTEM_LOGICAL_P
 {
 	struct implementation
 	{
-		static BOOL WINAPI impl(PSYSTEM_LOGICAL_PROCESSOR_INFORMATION, PDWORD)
+		static BOOL WINAPI impl(PSYSTEM_LOGICAL_PROCESSOR_INFORMATION Info, PDWORD Size)
 		{
-			SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
-			return FALSE;
+			if (*Size < sizeof(*Info))
+			{
+				*Size = sizeof(*Info);
+				SetLastError(ERROR_INSUFFICIENT_BUFFER);
+				return FALSE;
+			}
+
+			*Info = {};
+			Info->ProcessorMask = 1;
+			Info->Relationship = RelationProcessorCore;
+			return TRUE;
 		}
 	};
 
