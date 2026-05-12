@@ -1286,17 +1286,12 @@ bool background_searcher::LookForString(string_view const FileName)
 			}
 		}
 
-		if (SearchInFirst && alreadyRead >= SearchInFirst)
+		if (IsLastBlock || (SearchInFirst && alreadyRead >= SearchInFirst))
 			return false;
 
-		// Если мы потенциально прочитали не весь файл
-		if (!IsLastBlock)
-		{
-			// Отступаем назад на длину слова поиска минус 1
-			if (!File.SetPointer(-StepBackOffset, nullptr, FILE_CURRENT))
-				return false;
-			alreadyRead -= StepBackOffset;
-		}
+		if (!File.SetPointer(-StepBackOffset, nullptr, FILE_CURRENT))
+			return false;
+		alreadyRead -= StepBackOffset;
 	}
 
 	return false;
