@@ -1,4 +1,11 @@
 --------------------------------------------------------------------------------
+drkns 2026-05-12 21:14:58+01:00 - build 6684
+
+1. 0001610: Attempt to fix some historical madness in FindFile.
+
+2. Refactoring.
+
+--------------------------------------------------------------------------------
 MZK 2026-05-10 12:27:04-04:00 - build 6683
 
 1. gh-1000: Do not materialize text coordinates in Find All menu items.
