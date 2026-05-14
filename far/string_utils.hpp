@@ -125,6 +125,8 @@ using unordered_string_multimap_icase = std::unordered_multimap<string, T, strin
 
 
 [[nodiscard]]
+bool equal_icase(wchar_t Char1, wchar_t Char2);
+[[nodiscard]]
 bool equal_icase(string_view Str1, string_view Str2);
 [[nodiscard]]
 bool starts_with_icase(string_view Str, string_view Prefix);
