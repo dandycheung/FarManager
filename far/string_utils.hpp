@@ -75,9 +75,6 @@ namespace inplace
 	void upper(wchar_t& Char);
 	void lower(wchar_t& Char);
 
-	void upper(wchar_t* Str);
-	void lower(wchar_t* Str);
-
 	void upper(string& Str, size_t Pos = 0, size_t Count = string::npos);
 	void lower(string& Str, size_t Pos = 0, size_t Count = string::npos);
 }

@@ -2024,7 +2024,7 @@ static void WINAPI apiStrUpper(wchar_t *s1) noexcept
 	return cpp_try(
 	[&]
 	{
-		inplace::upper(s1);
+		inplace::upper({s1, std::wcslen(s1)});
 	});
 }
 
@@ -2033,7 +2033,7 @@ static void WINAPI apiStrLower(wchar_t *s1) noexcept
 	return cpp_try(
 	[&]
 	{
-		inplace::lower(s1);
+		inplace::lower({s1, std::wcslen(s1)});
 	});
 }
 

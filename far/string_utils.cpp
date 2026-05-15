@@ -115,16 +115,6 @@ void inplace::lower(wchar_t& Char)
 	lower({ &Char, 1 });
 }
 
-void inplace::upper(wchar_t* Str)
-{
-	upper({ Str, std::wcslen(Str) });
-}
-
-void inplace::lower(wchar_t* Str)
-{
-	lower({ Str, std::wcslen(Str) });
-}
-
 void inplace::upper(string& Str, size_t Pos, size_t Count)
 {
 	upper({ Str.data() + Pos, Count == string::npos? Str.size() - Pos : Count });
